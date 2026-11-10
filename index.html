@@ -1,0 +1,1156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VMS | Visitor Management System</title>
+
+<style>git remote set-url origin https://github.com/YOUR-USERNAME/digital-visitors-registration-system.git
+git branch -M main
+git push -u origin main
+:root {
+    --plum: #701c4a;
+    --plum-dark #521335;
+    --light: #f8f4e9;
+    --white  #fffdf8;
+    --text: #352833;
+    --muted: #80727a;
+    --green: #15966a;
+    --red #dc4c4c;
+    --border  #e9e1d8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: var(--light);
+    color: var(--text);
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 245px;
+    background: var(--plum-dark);
+    color: white;
+    padding: 25px 16px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+}
+
+.logo {
+    padding: 8px 10px 30px;
+    border-bottom: 1px solid #ffffff25;
+}
+
+.logo h2 {
+    font-size: 21px;
+}
+
+.logo span {
+    color: #e8bfd2;
+}
+
+.logo p {
+    font-size: 11px;
+    margin-top: 8px;
+    color: #e0cbd5;
+}
+
+.menu-title {
+    color: #cfb3c1;
+    font-size: 11px;
+    margin: 28px 10px 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #f3e8ee;
+    text-align: left;
+    padding: 14px 12px;
+    margin: 5px 0;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav:hover, .nav.active {
+    background: #ffffff20;
+    color: white;
+}
+
+/* MAIN CONTENT */
+.main {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+}
+
+.topbar {
+    background: var(--white);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar h2 {
+    font-size: 20px;
+}
+
+.topbar p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.admin {
+    background: #f0e2e9;
+    color: var(--plum);
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 13px;
+}
+
+.content {
+    padding: 30px;
+    max-width: 1500px;
+    margin: auto;
+}
+
+.welcome {
+    margin-bottom: 25px;
+}
+
+.welcome h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* STATISTICS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 22px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 3px 12px #35283308;
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    background: #f0e2e9;
+    color: var(--plum);
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 20px;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 17px;
+}
+
+.stat-card h2 {
+    font-size: 29px;
+    margin-top: 6px;
+}
+
+/* PANELS */
+.panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 24px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    box-shadow: 0 3px 12px #35283308;
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 12px;
+}
+
+.panel-heading h3 {
+    font-size: 17px;
+}
+
+.panel-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* FORM */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    font-size: 13px;
+    background: var(--white);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--plum);
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.primary {
+    background: var(--plum);
+    color: white;
+}
+
+.primary:hover {
+    background: var(--plum-dark);
+}
+
+.green {
+    background: #e0f5eb;
+    color: #087d4d;
+}
+
+.danger {
+    background: #fde8e8;
+    color: #c83232;
+}
+
+.secondary {
+    background: #eee8e2;
+    color: #554650;
+}
+
+.small {
+    padding: 7px 10px;
+    margin: 2px;
+    font-size: 11px;
+}
+
+/* TABLE */
+.table-tools {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 17px;
+    flex-wrap: wrap;
+}
+
+.table-tools input, .table-tools select {
+    padding: 11px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+}
+
+.table-tools input {
+    min-width: 220px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 850px;
+}
+
+th {
+    background: #f1ece3;
+    color: #62545d;
+    font-size: 12px;
+    text-align: left;
+}
+
+td {
+    font-size: 12px;
+    color: #554750;
+}
+
+th, td {
+    padding: 15px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.inside {
+    color: #07834f;
+    background: #e1f7ec;
+}
+
+.out {
+    color: #9a6a0c;
+    background: #fff3d8;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px;
+}
+
+/* PAGE NAVIGATION */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media(max-width: 950px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        width: 65px;
+        padding: 15px 7px;
+    }
+
+    .logo h2 {
+        font-size: 12px;
+    }
+
+    .logo p, .menu-title, .nav span {
+        display: none;
+    }
+
+    .nav {
+        text-align: center;
+        padding: 14px 3px;
+    }
+
+    .main {
+        margin-left: 65px;
+        width: calc(100% - 65px);
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .stats {
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-card h2 {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+        <h2>VMS<span>.</span></h2>
+        <p>VISITOR MANAGEMENT SYSTEM</p>
+    </div>
+
+    <p class="menu-title">MAIN MENU</p>
+
+    <button class="nav active" onclick="showPage('dashboard',this)">
+        📊 <span>Dashboard</span>
+    </button>
+
+    <button class="nav" onclick="showPage('register',this)">
+        ➕ <span>Register Visitor</span>
+    </button>
+
+    <button class="nav" onclick="showPage('records',this)">
+        👥 <span>Visitor Records</span>
+    </button>
+
+    <button class="nav" onclick="showPage('reports',this)">
+        📈 <span>Reports</span>
+    </button>
+
+    <p class="menu-title">SYSTEM</p>
+
+    <button class="nav" onclick="showPage('about',this)">
+        ℹ️ <span>About System</span>
+    </button>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <header class="topbar">
+        <div>
+            <h2 id="pageTitle">Dashboard</h2>
+            <p>Visitor Management and Monitoring</p>
+        </div>
+
+        <div class="admin">👤 Administrator</div>
+    </header>
+
+    <div class="content">
+
+        <!-- DASHBOARD PAGE -->
+        <section id="dashboard" class="page active">
+
+            <div class="welcome">
+                <h1>Welcome, Administrator!</h1>
+                <p>Here is an overview of visitor activities.</p>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-icon">👥</div>
+                    </div>
+                    <p>Total Visitors</p>
+                    <h2 id="total">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-icon">🟢</div>
+                    </div>
+                    <p>Currently Inside</p>
+                    <h2 id="inside">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-icon">🚪</div>
+                    </div>
+                    <p>Checked Out</p>
+                    <h2 id="checkedOut">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-icon">📅</div>
+                    </div>
+                    <p>Today's Visitors</p>
+                    <h2 id="today">0</h2>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Recent Visitor Activity</h3>
+                        <p>Latest visitor registrations</p>
+                    </div>
+
+                    <button class="btn primary"
+                        onclick="showPage('register')">
+                        + New Visitor
+                    </button>
+                </div>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Visitor Name</th>
+                                <th>Person Visiting</th>
+                                <th>Check In</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recentList"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- REGISTER PAGE -->
+        <section id="register" class="page">
+
+            <div class="welcome">
+                <h1>Register New Visitor</h1>
+                <p>Enter visitor information below.</p>
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Visitor Information Form</h3>
+                        <p>All fields are required.</p>
+                    </div>
+                </div>
+
+                <form id="visitorForm">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>Full Name</label>
+                            <input type="text" id="name"
+                                placeholder="Enter full name" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone"
+                                placeholder="Enter phone number" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Person to Visit</label>
+                            <input type="text" id="person"
+                                placeholder="Enter staff name" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Department</label>
+                            <select id="department" required>
+                                <option value="">Select department</option>
+                                <option>ICT Department</option>
+                                <option>Administration</option>
+                                <option>Finance</option>
+                                <option>Human Resources</option>
+                                <option>Technical Support</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="field full">
+                            <label>Purpose of Visit</label>
+                            <textarea id="purpose"
+                                placeholder="Explain the purpose of the visit"
+                                required></textarea>
+                        </div>
+
+                        <div class="field full">
+                            <button type="submit" class="btn primary">
+                                Register Visitor
+                            </button>
+
+                            <button type="reset" class="btn secondary">
+                                Clear Form
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <!-- RECORDS PAGE -->
+        <section id="records" class="page">
+
+            <div class="welcome">
+                <h1>Visitor Records</h1>
+                <p>Manage all visitor registration records.</p>
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>All Visitors</h3>
+                        <p>Search, check out or delete visitor records.</p>
+                    </div>
+
+                    <button class="btn primary"
+                        onclick="showPage('register')">
+                        + Register
+                    </button>
+                </div>
+
+                <div class="table-tools">
+
+                    <input type="text" id="search"
+                        placeholder="Search name or phone...">
+
+                    <select id="filter">
+                        <option value="All">All Visitors</option>
+                        <option value="Inside">Currently Inside</option>
+                        <option value="Checked Out">Checked Out</option>
+                    </select>
+
+                </div>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Person Visiting</th>
+                                <th>Department</th>
+                                <th>Purpose</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="visitorList"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- REPORTS PAGE -->
+        <section id="reports" class="page">
+
+            <div class="welcome">
+                <h1>Visitor Reports</h1>
+                <p>Overview of visitor registration statistics.</p>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <p>Total Registered</p>
+                    <h2 id="reportTotal">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Currently Inside</p>
+                    <h2 id="reportInside">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Checked Out</p>
+                    <h2 id="reportOut">0</h2>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Visitor Report</h3>
+                        <p>Download visitor records as a CSV file.</p>
+                    </div>
+                </div>
+
+                <button class="btn primary" onclick="exportCSV()">
+                    ⬇ Export Visitor Report
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- ABOUT PAGE -->
+        <section id="about" class="page">
+
+            <div class="welcome">
+                <h1>About the System</h1>
+                <p>Digital Visitor Management System</p>
+            </div>
+
+            <div class="panel">
+
+                <h3>System Overview</h3>
+                <br>
+
+                <p>
+                    The Digital Visitor Management System is designed
+                    to simplify visitor registration and monitoring
+                    within an organisation.
+                </p>
+
+                <br>
+
+                <h3>System Objectives</h3>
+                <br>
+
+                <p>• Improve visitor registration.</p>
+                <br>
+                <p>• Maintain digital visitor records.</p>
+                <br>
+                <p>• Monitor visitor check-in and check-out.</p>
+                <br>
+                <p>• Improve record searching and reporting.</p>
+                <br>
+
+                <h3>Technology Used</h3>
+                <br>
+
+                <p>HTML, CSS, JavaScript and Browser Local Storage.</p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <footer>
+        Digital Visitor Management System | ICT Attachment Project | 2026
+    </footer>
+
+</main>
+
+</div>
+
+<script>
+
+// LOAD SAVED DATA
+let visitors = JSON.parse(
+    localStorage.getItem("vmsVisitors") || "[]"
+);
+
+// NAVIGATION
+function showPage(page, button) {
+
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    document.querySelectorAll(".nav").forEach(n => {
+        n.classList.remove("active");
+    });
+
+    if(button) {
+        button.classList.add("active");
+    } else {
+        document.querySelectorAll(".nav").forEach(n => {
+            if(n.getAttribute("onclick").includes(page)) {
+                n.classList.add("active");
+            }
+        });
+    }
+
+    const titles = {
+        dashboard: "Dashboard",
+        register: "Register Visitor",
+        records: "Visitor Records",
+        reports: "Reports",
+        about: "About System"
+    };
+
+    document.getElementById("pageTitle").textContent =
+        titles[page];
+}
+
+// SAVE DATA
+function saveData() {
+    localStorage.setItem("vmsVisitors", JSON.stringify(visitors));
+}
+
+// REGISTER VISITOR
+document.getElementById("visitorForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const visitor = {
+        id: Date.now(),
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        person: document.getElementById("person").value.trim(),
+        department: document.getElementById("department").value,
+        purpose: document.getElementById("purpose").value.trim(),
+        checkIn: new Date().toLocaleString(),
+        date: new Date().toLocaleDateString(),
+        checkOut: "-",
+        status: "Inside"
+    };
+
+    visitors.unshift(visitor);
+
+    saveData();
+    updateSystem();
+
+    this.reset();
+
+    alert("Visitor registered successfully!");
+
+    showPage("dashboard");
+
+});
+
+// CHECK OUT
+function checkOut(id) {
+
+    const visitor = visitors.find(v => v.id === id);
+
+    if(visitor && visitor.status === "Inside") {
+
+        visitor.checkOut = new Date().toLocaleString();
+        visitor.status = "Checked Out";
+
+        saveData();
+        updateSystem();
+
+    }
+
+}
+
+// DELETE RECORD
+function deleteVisitor(id) {
+
+    if(confirm("Are you sure you want to delete this visitor record?")) {
+
+        visitors = visitors.filter(v => v.id !== id);
+
+        saveData();
+        updateSystem();
+
+    }
+
+}
+
+// CREATE TABLE CELL SAFELY
+function addCell(row, value) {
+
+    const cell = document.createElement("td");
+    cell.textContent = value;
+    row.appendChild(cell);
+
+}
+
+// STATUS BADGE
+function addStatus(row, status) {
+
+    const cell = document.createElement("td");
+    const badge = document.createElement("span");
+
+    badge.className = "status " +
+        (status === "Inside" ? "inside" : "out");
+
+    badge.textContent = status;
+
+    cell.appendChild(badge);
+    row.appendChild(cell);
+
+}
+
+// DISPLAY VISITOR RECORDS
+function displayRecords() {
+
+    const list = document.getElementById("visitorList");
+
+    list.replaceChildren();
+
+    const query = document.getElementById("search")
+        .value.toLowerCase();
+
+    const filter = document.getElementById("filter").value;
+
+    const results = visitors.filter(v => {
+
+        const matchesSearch =
+            v.name.toLowerCase().includes(query) ||
+            v.phone.toLowerCase().includes(query);
+
+        const matchesFilter =
+            filter === "All" || v.status === filter;
+
+        return matchesSearch && matchesFilter;
+
+    });
+
+    if(results.length === 0) {
+
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 9;
+        cell.className = "empty";
+        cell.textContent = "No visitor records found.";
+
+        row.appendChild(cell);
+        list.appendChild(row);
+
+        return;
+    }
+
+    results.forEach(v => {
+
+        const row = document.createElement("tr");
+
+        addCell(row, v.name);
+        addCell(row, v.phone);
+        addCell(row, v.person);
+        addCell(row, v.department);
+        addCell(row, v.purpose);
+        addCell(row, v.checkIn);
+        addCell(row, v.checkOut);
+        addStatus(row, v.status);
+
+        const actions = document.createElement("td");
+
+        if(v.status === "Inside") {
+
+            const checkoutBtn = document.createElement("button");
+
+            checkoutBtn.className = "btn green small";
+            checkoutBtn.textContent = "Check Out";
+
+            checkoutBtn.onclick = () => checkOut(v.id);
+
+            actions.appendChild(checkoutBtn);
+
+        }
+
+        const deleteBtn = document.createElement("button");
+
+        deleteBtn.className = "btn danger small";
+        deleteBtn.textContent = "Delete";
+
+        deleteBtn.onclick = () => deleteVisitor(v.id);
+
+        actions.appendChild(deleteBtn);
+        row.appendChild(actions);
+
+        list.appendChild(row);
+
+    });
+
+}
+
+// DASHBOARD RECENT VISITORS
+function displayRecent() {
+
+    const list = document.getElementById("recentList");
+
+    list.replaceChildren();
+
+    const recent = visitors.slice(0, 5);
+
+    if(recent.length === 0) {
+
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 4;
+        cell.className = "empty";
+        cell.textContent = "No visitors registered yet.";
+
+        row.appendChild(cell);
+        list.appendChild(row);
+
+        return;
+    }
+
+    recent.forEach(v => {
+
+        const row = document.createElement("tr");
+
+        addCell(row, v.name);
+        addCell(row, v.person);
+        addCell(row, v.checkIn);
+        addStatus(row, v.status);
+
+        list.appendChild(row);
+
+    });
+
+}
+
+// UPDATE DASHBOARD
+function updateDashboard() {
+
+    const inside = visitors.filter(v => v.status === "Inside").length;
+
+    const checkedOut = visitors.filter(
+        v => v.status === "Checked Out"
+    ).length;
+
+    const today = new Date().toLocaleDateString();
+
+    const todayCount = visitors.filter(v => v.date === today).length;
+
+    document.getElementById("total").textContent = visitors.length;
+    document.getElementById("inside").textContent = inside;
+    document.getElementById("checkedOut").textContent = checkedOut;
+    document.getElementById("today").textContent = todayCount;
+
+    document.getElementById("reportTotal").textContent = visitors.length;
+    document.getElementById("reportInside").textContent = inside;
+    document.getElementById("reportOut").textContent = checkedOut;
+
+}
+
+// EXPORT CSV REPORT
+function exportCSV() {
+
+    if(visitors.length === 0) {
+        alert("There are no visitor records to export.");
+        return;
+    }
+
+    const columns = [
+        "Name", "Phone", "Person Visiting",
+        "Department", "Purpose", "Check In",
+        "Check Out", "Status"
+    ];
+
+    const rows = visitors.map(v => [
+        v.name, v.phone, v.person,
+        v.department, v.purpose,
+        v.checkIn, v.checkOut, v.status
+    ]);
+
+    const escapeCSV = value =>
+        '"' + String(value).replace(/"/g, '""') + '"';
+
+    const csv = [
+        columns,
+        ...rows
+    ].map(row => row.map(escapeCSV).join(",")).join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "Visitor_Management_Report.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+
+}
+
+// UPDATE EVERYTHING
+function updateSystem() {
+
+    displayRecords();
+    displayRecent();
+    updateDashboard();
+
+}
+
+// SEARCH AND FILTER
+document.getElementById("search")
+.addEventListener("input", displayRecords);
+
+document.getElementById("filter")
+.addEventListener("change", displayRecords);
+
+// INITIAL DISPLAY
+updateSystem();
+
+</script>
+
+</body>
+</html>
